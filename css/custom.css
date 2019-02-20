@@ -5,5 +5,10 @@ strong {
 	color: #FFF;
 }
 .container {
-	margin-top: 40px;
+	margin-top: 30px;
+}
+.floating {
+	position: absolute;
+	top:0px;
+    left:0px;
 }
