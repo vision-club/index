@@ -4,3 +4,9 @@ body {
 strong {
 	color: #FFF;
 }
+.container {
+	margin-top: 40px;
+}
+#bigpic {
+	max-width: 600px;
+}
