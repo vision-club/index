@@ -13,11 +13,11 @@
 <body>
 <div class="container">
   <div class="row">
-    <center>
-    <div class="col-md-7 col-sm-12 col-12">
+    <div class="hidden-xs hidden-sm col-lg-2"></div>
+    <div class="col-xs-12 col-sm-12 col-12 col-lg-8">
       <img id="bigpic" class="img-fluid" alt="Vision" src="img/vision.png">
     </div>
-    </center>
+     <div class="hidden-xs hidden-sm col-lg-2"></div>
   </div>
   <br>
     <center><strong>
@@ -25,13 +25,14 @@
     </strong></center>
 </div>
 <script type="text/javascript">
-var pic = document.getElementById("bigpic");
-pic.onmouseover = function(){
-  this.src = "img/vision_minus.png";
-};
-pic.onmouseout = function(){
-  this.src = "img/vision.png";
-};
+  var pic = document.getElementById("bigpic");
+  pic.onmouseover = function(){
+    this.src = "img/vision_minus.png";
+  };
+  pic.onmouseout = function(){
+    this.src = "img/vision.png";
+  };
+  console.log(pic.clientWidth);
 </script>
 </body>
 </html>
