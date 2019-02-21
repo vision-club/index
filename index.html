@@ -12,11 +12,11 @@
   <script src="js/d3.min.js"></script>
 </head>
 <body>
-<div class="container">
-  <div id="mouse" style="background-color: #33FF33;position: absolute;top:0;left: 0"></div>
+<div class="container">  
   <div class="row">
     <div class="hidden-xs hidden-sm col-lg-2"></div>
     <div id="eyeContainer" class="col-xs-12 col-sm-12 col-12 col-lg-8">
+      <div id="mouse" style="z-index: 10000; background-color: #33FF33;position: absolute;top:0;left: 0"></div>
       <img id="eye" class="img-fluid floating" alt="Vision" src="img/vision_filled.png">
       </svg>  
     </div>
@@ -36,6 +36,10 @@
   // whoop whoop whoop whoop
   var offsetLeft = offset.left;
   var offsetTop = offset.top;
+  var minX = 150;
+  var maxX = 600;
+  var minY = 150;
+  var maxY = 500;
 
   // Draw iris with svg
   var svg = d3.select("#eyeContainer").append("svg")
@@ -75,8 +79,7 @@
       var position = "Mouse X: " + mouseX + 
                       "<br/>Mouse Y: " + mouseY + 
                       "<br/>Iris X: " + irisX +
-                      "<br/>Iris Y: " + irisY +
-                      "<br/>Offset: " + offsetTop + " " + offsetLeft;
+                      "<br/>Iris Y: " + irisY;
       $("div").filter("#mouse").html(position);       
   }
   function loop() {
@@ -86,11 +89,23 @@
   function moveIris() {
     var dx = (mouseX - offsetLeft - irisX) * .001;
     var dy = (mouseY - offsetTop - irisY) * .001;
-    irisX += dx;
-    irisY += dy;
+    // irisX += dx;
+    // irisY += dy;
+    irisX = checkMax(irisX, dx, minX, maxX);
+    irisY = checkMax(irisY, dy, minY, maxY);
     d3.selectAll(".iris")
       .attr("cx",irisX)
       .attr("cy",irisY);
+  }
+  function checkMax(irisX, dx, minX, maxX) {
+    if (irisX + dx < minX) {
+      return minX;
+    } else if (irisX + dx > maxX) {
+      return maxX;
+    } else {
+      return irisX + dx;
+    }
+    
   }
 </script>
 </body>
