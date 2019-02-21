@@ -5,10 +5,14 @@ strong {
 	color: #FFF;
 }
 .container {
-	margin-top: 30px;
+	margin-top: 20px;
 }
 .floating {
 	position: absolute;
 	top:0px;
     left:0px;
+}
+#eye {
+	z-index: 999;
+ 	max-height: 100vh;
 }
