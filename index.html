@@ -10,6 +10,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="js/d3.min.js"></script>
+  <script src="http://www.google.com/jsapi"></script>  
+  <script> google.load("jquery",'1.7'); google.load("jqueryui", "1"); </script>  
+  <script src="js/mutate.events.js"></script>  
+  <script src="js/mutate.min.js"></script> 
 </head>
 <body>
 <div class="container">  
@@ -36,41 +40,69 @@
   // whoop whoop whoop whoop
   var offsetLeft = offset.left;
   var offsetTop = offset.top;
-  var minX = 150;
-  var maxX = 600;
-  var minY = 150;
-  var maxY = 500;
+  var minX = width*0.2; //150
+  var maxX = width*0.8; //600
+  var minY = height*0.33; //150;
+  var maxY = height*0.67;// 500;
+  var irisId = "iris";
 
-  // Draw iris with svg
-  var svg = d3.select("#eyeContainer").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("class","floating");
-  var outer = svg.append("circle")
-    .attr("id","iris-outer")
-    .attr("class","iris")
-    .attr("cx", irisX)
-    .attr("cy", irisY)
-    .attr("r", width*0.18)
-    .attr("stroke", "#FFF")
-    .attr("stroke-width", width*0.072 + "px")
-    .style("z-index",1);
-  var inner = svg.append("circle")
-    .attr("id","iris-inner")
-    .attr("class","iris")
-    .attr("cx", irisX)
-    .attr("cy", irisY)
-    .attr("r", width*0.072)
-    .style("fill", "#FFF")
-    .style("z-index",2);
+  drawIris(irisId, width, height)
 
-  // Iris movement
   $(document).ready(function() {
+    $('#eye').mutate('height',function (element,info){ 
+        updateVariables();
+        drawIris(irisId, height, width);
+    }); 
     $(this).on("mousemove", function(event) {
         mouseMove(event);
         loop();
     });
   });
+
+  function updateVariables(){
+    eye = $('#eye');
+    height = eye.height();
+    width = eye.width();
+    irisX = width/2;
+    irisY = height/2;
+    offset = $('#eyeContainer').offset(); 
+    offsetLeft = offset.left;
+    offsetTop = offset.top;
+    minX = width*0.2; //150
+    maxX = width*0.8; //600
+    minY = height*0.33; //150;
+    maxY = height*0.67;// 500;
+  }
+
+  function drawIris(svgId, width, height) {
+    $('#' + svgId).remove();
+    var svg = d3.select("#eyeContainer").append("svg")
+      .attr("id", irisId)
+      .attr("width", width)
+      .attr("height", height)
+      .attr("class","floating");
+    irisX = width/2;
+    irisY = height/2;
+    svg = d3.select("#" + irisId);
+    svg.html = "";
+    var outer = svg.append("circle")
+      .attr("id","iris-outer")
+      .attr("class","iris")
+      .attr("cx", irisX)
+      .attr("cy", irisY)
+      .attr("r", width*0.18)
+      .attr("stroke", "#FFF")
+      .attr("stroke-width", width*0.072 + "px")
+      .style("z-index",1);
+    var inner = svg.append("circle")
+      .attr("id","iris-inner")
+      .attr("class","iris")
+      .attr("cx", irisX)
+      .attr("cy", irisY)
+      .attr("r", width*0.072)
+      .style("fill", "#FFF")
+      .style("z-index",2);
+  }
 
   function mouseMove(event) {
       var offset = $('#eyeContainer').offset(); 
@@ -105,7 +137,7 @@
     } else {
       return irisX + dx;
     }
-    
+  
   }
 </script>
 </body>
